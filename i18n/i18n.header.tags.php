@@ -243,7 +243,10 @@ if ($env['ext'] == 'page' && isset($id) && $id > 0) {
             
             // Присваиваем теги для header.tpl
             $t->assign([
-                $tag                     => cot_build_extrafields_data('i18n', $exfld, $value, $parser),
+             // без экранирования
+             // $tag                     => cot_build_extrafields_data('i18n', $exfld, $value, $parser), 
+             // экранируем кавычки и другие специальные символы
+				$tag                     => htmlspecialchars(cot_build_extrafields_data('i18n', $exfld, $value, $parser), ENT_QUOTES, 'UTF-8'), 
                 $tag . '_TITLE'          => cot_extrafield_title($exfld, 'i18n_'),
                 $tag . '_VALUE'          => $value,
             ]);
