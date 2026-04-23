@@ -222,3 +222,43 @@ if ($env['ext'] == 'page' && isset($id) && $id > 0) {
         }
     }
 }
+
+
+// ========== 4. ПЕРЕДАЧА ЭКСТРАПОЛЕЙ ПЕРЕВОДА В HEADER ==========
+if ($env['ext'] == 'page' && isset($id) && $id > 0) {
+    // Загружаем перевод для текущего языка, если ещё не загружен
+    if (empty($pag_i18n) && !empty($i18n_locale)) {
+        $pag_i18n = cot_i18n_get_page($id, $i18n_locale);
+    }
+    
+    if (!empty($pag_i18n) && !empty(Cot::$extrafields[Cot::$db->i18n_pages])) {
+        // Загружаем данные оригинальной страницы для парсера
+        $page_data = Cot::$db->query("SELECT page_parser FROM " . Cot::$db->pages . " WHERE page_id = ?", array($id))->fetch();
+        $parser = $page_data['page_parser'] ?? Cot::$cfg['page']['parser'];
+        
+        foreach (Cot::$extrafields[Cot::$db->i18n_pages] as $exfld) {
+            $field_name = $exfld['field_name'];
+            $tag = 'I18N_HEADER_' . strtoupper($field_name);
+            $value = $pag_i18n['ipage_' . $field_name] ?? '';
+            
+            // Присваиваем теги для header.tpl
+            $t->assign([
+                $tag                     => cot_build_extrafields_data('i18n', $exfld, $value, $parser),
+                $tag . '_TITLE'          => cot_extrafield_title($exfld, 'i18n_'),
+                $tag . '_VALUE'          => $value,
+            ]);
+        }
+    } else {
+        // Сброс тегов, если перевод отсутствует
+        if (!empty(Cot::$extrafields[Cot::$db->i18n_pages])) {
+            foreach (Cot::$extrafields[Cot::$db->i18n_pages] as $exfld) {
+                $tag = 'I18N_HEADER_' . strtoupper($exfld['field_name']);
+                $t->assign([
+                    $tag             => '',
+                    $tag . '_TITLE'  => '',
+                    $tag . '_VALUE'  => '',
+                ]);
+            }
+        }
+    }
+}
