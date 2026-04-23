@@ -13,6 +13,8 @@ defined('COT_CODE') or die('Wrong URL.');
 
 require_once cot_incfile('page', 'module');
 require_once cot_incfile('forms');
+// === EXTRAFIELDS: Подключаем API дополнительных полей ===
+require_once cot_incfile('extrafields');
 
 $id = cot_import('id', 'G', 'INT');
 $l = cot_import('l', 'G', 'ALP');
@@ -42,9 +44,10 @@ if ($id > 0 && $stmt->rowCount() == 1) {
         $pag_i18n = $stmt->rowCount() == 1 ? $stmt->fetch() : [];
         $stmt->closeCursor();
     }
-
+    // === EXTRAFIELDS: Загружаем конфигурацию дополнительных полей для таблицы переводов ===
+    $extrafields = Cot::$extrafields[$db_i18n_pages] ?? [];
     // ------------------------------------------------------------------
-    // ДОБАВЛЕНИЕ НОВОГО ПЕРЕВОДА 
+    // ДОБАВЛЕНИЕ НОВОГО ПЕРЕВОДА (без изменений)
     // ------------------------------------------------------------------
     if ($a == 'add' && empty($pag_i18n)) {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -72,6 +75,18 @@ if ($id > 0 && $stmt->rowCount() == 1) {
                 'ipage_desc' => cot_import('desc', 'P', 'TXT'),
                 'ipage_text' => cot_import('translate_text', 'P', 'HTM')
             ];
+
+            // === EXTRAFIELDS: Импортируем значения дополнительных полей из POST ===
+            foreach ($extrafields as $exfld) {
+                $fieldName = 'ipage_' . $exfld['field_name'];
+                $pag_i18n[$fieldName] = cot_import_extrafields(
+                    'ri18n' . $exfld['field_name'],
+                    $exfld,
+                    'P',
+                    '',
+                    'i18n_'
+                );
+            }
             if (mb_strlen($pag_i18n['ipage_title']) < 2) {
                 cot_error('page_titletooshort', 'title');
             }
@@ -117,6 +132,28 @@ if ($id > 0 && $stmt->rowCount() == 1) {
             'I18N_IPAGE_DESC' => htmlspecialchars($desc_val),
             'I18N_IPAGE_TEXT' => cot_textarea('translate_text', $text_val, 32, 80, '', 'input_textarea_editor')
         ]);
+        // === EXTRAFIELDS: Генерируем и передаём в шаблон поля для ввода дополнительных данных ===
+        if (!empty($extrafields)) {
+            foreach ($extrafields as $exfld) {
+                $uname = strtoupper($exfld['field_name']);
+                $fieldValue = $pag_i18n['ipage_' . $exfld['field_name']] ?? null;
+                $extrafieldElement = cot_build_extrafields(
+                    'ri18n' . $exfld['field_name'],
+                    $exfld,
+                    $fieldValue
+                );
+                $extrafieldTitle = cot_extrafield_title($exfld, 'i18n_');
+
+                // === FIX: Добавлены общие теги EXTRAFLD для шаблона ===
+                $t->assign([
+                    'I18N_PAGE_FORM_' . $uname            => $extrafieldElement,
+                    'I18N_PAGE_FORM_' . $uname . '_TITLE' => $extrafieldTitle,
+                    'I18N_PAGE_FORM_EXTRAFLD'             => $extrafieldElement,
+                    'I18N_PAGE_FORM_EXTRAFLD_TITLE'       => $extrafieldTitle,
+                ]);
+                $t->parse('MAIN.EXTRAFLD');
+            }
+        }
 
         cot_display_messages($t);
 
@@ -131,6 +168,9 @@ if ($id > 0 && $stmt->rowCount() == 1) {
         $a == 'edit' && !empty($pag_i18n)
         && ($i18n_admin || $i18n_edit || Cot::$usr['id'] == $pag_i18n['ipage_translatorid'])
     ) {
+        // === EXTRAFIELDS: Сохраняем старые данные для корректной обработки файловых полей ===
+        $pag_i18n_old = $pag_i18n;
+		
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Получаем новую локаль из POST
             $new_locale = cot_import('locale', 'P', 'ALP');
@@ -160,7 +200,20 @@ if ($id > 0 && $stmt->rowCount() == 1) {
             $pag_i18n['ipage_text'] = cot_import('translate_text', 'P', 'HTM');
             // Если локаль изменилась, обновляем и её
             $pag_i18n['ipage_locale'] = $new_locale;
-
+			
+            // === EXTRAFIELDS: Импортируем значения дополнительных полей из POST, передавая старые значения ===
+            foreach ($extrafields as $exfld) {
+                $fieldName = 'ipage_' . $exfld['field_name'];
+                $oldValue = $pag_i18n_old[$fieldName] ?? '';
+                $pag_i18n[$fieldName] = cot_import_extrafields(
+                    'ri18n' . $exfld['field_name'],
+                    $exfld,
+                    'P',
+                    $oldValue,
+                    'i18n_'
+                );
+            }
+			
             if (cot_error_found()) {
                 // При ошибках не делаем редирект, а покажем форму снова с заполненными полями
                 // Для этого нужно сохранить $pag_i18n с новыми данными и $new_locale
@@ -169,7 +222,8 @@ if ($id > 0 && $stmt->rowCount() == 1) {
                 // Если локаль изменилась, удаляем старую запись и вставляем новую? 
                 // Или просто обновляем, меняя ipage_locale. 
                 // Проще обновить, но условие WHERE должно быть по старой локали.
-                Cot::$db->update(Cot::$db->i18n_pages,
+                /* 
+				Cot::$db->update(Cot::$db->i18n_pages,
                     [
                         'ipage_locale' => $new_locale,
                         'ipage_date' => $pag_i18n['ipage_date'],
@@ -179,8 +233,12 @@ if ($id > 0 && $stmt->rowCount() == 1) {
                     ],
                     "ipage_id = ? AND ipage_locale = ?",
                     [$id, $i18n_locale]
-                );
-
+                ); 
+				*/
+				unset($pag_i18n['ipage_id']);
+				// старый ДиБи-update заменили на новый
+				Cot::$db->update(Cot::$db->i18n_pages, $pag_i18n, "ipage_id = ? AND ipage_locale = ?", [$id, $i18n_locale]);
+				
                 /* === Hook === */
                 foreach (cot_getextplugins('i18n.page.edit.update') as $pl) {
                     include $pl;
@@ -236,7 +294,28 @@ if ($id > 0 && $stmt->rowCount() == 1) {
             'I18N_IPAGE_DESC' => htmlspecialchars($desc_val),
             'I18N_IPAGE_TEXT' => cot_textarea('translate_text', $text_val, 32, 80, '', 'input_textarea_editor')
         ]);
+        // === EXTRAFIELDS: Генерируем и передаём в шаблон поля для ввода дополнительных данных (редактирование) ===
+        if (!empty($extrafields)) {
+            foreach ($extrafields as $exfld) {
+                $uname = strtoupper($exfld['field_name']);
+                $fieldValue = $pag_i18n['ipage_' . $exfld['field_name']] ?? null;
+                $extrafieldElement = cot_build_extrafields(
+                    'ri18n' . $exfld['field_name'],
+                    $exfld,
+                    $fieldValue
+                );
+                $extrafieldTitle = cot_extrafield_title($exfld, 'i18n_');
 
+                // === FIX: Добавлены общие теги EXTRAFLD для шаблона ===
+                $t->assign([
+                    'I18N_PAGE_FORM_' . $uname            => $extrafieldElement,
+                    'I18N_PAGE_FORM_' . $uname . '_TITLE' => $extrafieldTitle,
+                    'I18N_PAGE_FORM_EXTRAFLD'             => $extrafieldElement,
+                    'I18N_PAGE_FORM_EXTRAFLD_TITLE'       => $extrafieldTitle,
+                ]);
+                $t->parse('MAIN.EXTRAFLD');
+            }
+        }
         cot_display_messages($t);
 
         /* === Hook === */
@@ -246,7 +325,7 @@ if ($id > 0 && $stmt->rowCount() == 1) {
         /* =============*/
     }
     // ------------------------------------------------------------------
-    // УДАЛЕНИЕ 
+    // УДАЛЕНИЕ (без изменений)
     // ------------------------------------------------------------------
     elseif ($a == 'delete' && ($i18n_admin || Cot::$usr['id'] == $pag_i18n['ipage_translatorid'])) {
         if (cot_plugin_active('trashcan') && Cot::$cfg['plugin']['trashcan']['trash_page']) {
@@ -289,5 +368,4 @@ if ($id > 0 && $stmt->rowCount() == 1) {
     }
 } else {
     cot_die(true, true);
-
 }
