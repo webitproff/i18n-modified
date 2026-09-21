@@ -9,10 +9,20 @@ Tags=header.tpl:{I18N_LANG_ROW_URL},{I18N_LANG_ROW_CODE},{I18N_LANG_ROW_TITLE},{
 /**
  * Renders language selector
  * Отрисовка переключателя языков и генерация тегов hreflang.
- * Фиксы и дополнительные плюшки от https://github.com/webitproff 
- * @package I18n
- * @copyright (c) Cotonti Team
- * @license https://github.com/Cotonti/Cotonti/blob/master/License.txt
+ *
+ * Filename:plugins/i18n/i18n.header.tags.php
+ *
+ * Source and updates   https://github.com/webitproff/i18n-modified
+ * ReadMeMore:          https://abuyfile.com/ru/market/cotonti/plugs/i18n-modified
+ * Support:             https://abuyfile.com/ru/forums/cotonti/lang-localiz
+ *
+ * Date: Sep 19, 2026
+ *
+ * @package i18n
+ * @version 2.10-1.0.13
+ * @author Cotonti Team, webitproff
+ * @copyright (c) Cotonti Team, webitproff 2026 | https://github.com/webitproff
+ * @license BSD
  */
 
 
