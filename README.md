@@ -285,3 +285,11 @@ The plugin works with the `page` module. Support for other modules may be absent
 ## Conclusion
 
 i18n modified is a powerful tool for creating multilingual sites on Cotonti. It combines a language switcher, structure translation, page translation, support for additional fields, SEO tags, and integration with tags and trashcan. Flexible settings allow it to be adapted to different scenarios. The administrative interface gives full control over translations. The rights system differentiates access. Logging and messages help track changes. All this makes the plugin suitable for serious multilingual projects where not only interface strings are important, but also full content translation.
+
+[Русский: i18n modified - Модифицированный плагин мультиязычности для Cotonti](https://abuyfile.com/en/market/cotonti/plugs/i18n-modified) 
+
+[Cotonti: Локализация и мультиязычность сайта](https://abuyfile.com/ru/forums/cotonti/lang-localiz) 
+
+[Integrating Extrafields into the I18n plugin in Cotonti CMF](https://abuyfile.com/en/cotonti/authorial-plugins/integraciya-extrafields-v-plagin-i18n-v-cotonti-cmf)
+
+
