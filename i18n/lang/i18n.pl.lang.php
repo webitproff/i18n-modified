@@ -1,52 +1,65 @@
 <?php
 /**
- * Polish Language File for extension: i18n Content Internationalization Plugin (plugins/i18n/lang/i18n.pl.lang.php)
+ * Polish (TO DO) Language File for i18n modified Plugin for CMF Cotonti, PHP v.8.5+, MySQL v.8.4 
  *
- * i18n plugin for Cotonti 0.9.26, PHP 8.4+
- * Version: 1.0.13
- * Date: March 06th, 2026
- * The translation has been adapted: webitproff, 2026 | https://github.com/webitproff
- * Polish localization: 2026
+ * - module name and description (info_name, info_desc, info_notes)
+ * - admin panel settings (cfg_…)
+ * - field hints (cfg_…_hint)
+ *
+ * Filename: plugins/i18n/lang/i18n.pl.lang.php
+ *
+ * Source and updates   https://github.com/webitproff/i18n-modified
+ * ReadMeMore:          https://abuyfile.com/ru/market/cotonti/plugs/i18n-modified
+ * Support:             https://abuyfile.com/ru/forums/cotonti/lang-localiz
+ *
+ * Date: Sep 19, 2026
  *
  * @package i18n
- * @copyright (c) Cotonti Team
- * @license https://github.com/Cotonti/Cotonti/blob/master/License.txt
+ * @version 2.10-1.0.13
+ * @author Cotonti Team, webitproff
+ * @copyright (c) Cotonti Team, webitproff 2026 | https://github.com/webitproff
+ * @license BSD
  */
+
 defined('COT_CODE') or die('Wrong URL.');
 
+// ========================
+// EXTENSION INFORMATION
+// ========================
+$L['info_name']  = 'i18n modified';
+$L['info_desc']  = 'Modified plugin for multilingual interface and articles. Support for multilingual content in Pages module, core and extensions.';
+$L['info_notes'] = 'More: <a href="https://github.com/webitproff/i18n-modified" target="_blank">documentation and links</a>.';
+
+$L['i18n_title']       = $L['info_name'];
+$L['i18n_desc']        = $L['info_desc'];
+
+$L['i18n_pages'] = 'i18n pages translations';
 // Plugin configuration
-$L['cfg_cats'] = 'Kategorie główne do zastosowania i18n';
-$L['cfg_cats_hint'] = 'Kody kategorii oddzielone przecinkami';
-$L['cfg_locales'] = 'Lista lokalizacji witryny';
-$L['cfg_locales_hint'] = 'Każda lokalizacja w nowej linii, format: locale_code|Nazwa lokalizacji';
-$L['cfg_omitmain'] = 'Pomijać parametr języka w URL, jeśli wskazuje na język główny';
-$L['cfg_rewrite'] = 'Włączyć przyjazne adresy URL dla parametru języka w linkach';
-$L['cfg_rewrite_hint'] = 'Wymaga ręcznej aktualizacji pliku .htaccess';
-$L['cfg_cookie'] = 'Zapamiętywać wybrany język w cookie';
 
-/**
- * Plugin Information
- */
-$L['info_name'] = 'Wielojęzyczność artykułów i interfejsu';
-$L['info_desc'] = 'Wsparcie dla wielojęzycznej treści i kategorii modułu Pages, rdzeń systemu wielojęzyczności interfejsu.';
-$L['info_notes'] = 'Plugin nie tłumaczy treści w innych modułach i wtyczkach.';
+$L['cfg_cats'] = 'Root categories to apply i18n on';
+$L['cfg_cats_hint'] = 'Comma separated category codes';
+$L['cfg_locales'] = 'List of site locales';
+$L['cfg_locales_hint'] = 'Each locale on new line, format: locale_code|Locale title';
+$L['cfg_omitmain'] = 'Omit language parameter in URLs if pointing to main language';
+$L['cfg_rewrite'] = 'Enable URL overwrite for language parameter';
+$L['cfg_rewrite_hint'] = 'Requires manual .htaccess update';
+$L['cfg_cookie'] = 'Remember language selection in cookie';
 
-/**
- * Plugin Title & Subtitle
- */
+
 // Plugin strings
-$L['i18n_adding'] = 'Dodawanie nowego tłumaczenia';
-$L['i18n_confirm_delete'] = 'Czy na pewno chcesz usunąć tłumaczenie?';
-$L['i18n_delete'] = 'Usuń tłumaczenie';
-$L['i18n_editing'] = 'Edycja tłumaczenia';
-$L['i18n_incorrect_locale'] = 'Nieprawidłowa lokalizacja';
-$L['i18n_items_added'] = 'Dodano {$cnt} elementów';
-$L['i18n_items_removed'] = 'Usunięto {$cnt} elementów';
-$L['i18n_items_updated'] = 'Zaktualizowano {$cnt} elementów';
-$L['i18n_locale_selection'] = 'Wybór lokalizacji';
-$L['i18n_localized'] = 'Zlokalizowano';
-$L['i18n_no_categories'] = 'Nie wybrano kategorii do tłumaczenia. Można je ustawić w <a href="%s">ustawieniach internacjonalizacji</a>';
-$L['i18n_original'] = 'Oryginał';
-$L['i18n_structure'] = 'Internacjonalizacja struktury';
-$L['i18n_translate'] = 'Przetłumacz';
-$L['i18n_translation'] = 'Tłumaczenie';
+
+$L['i18n_adding'] = 'Adding new translation';
+$L['i18n_confirm_delete'] = 'Are you sure you want to delete the translation?';
+$L['i18n_delete'] = 'Delete translation';
+$L['i18n_editing'] = 'Editing a translation';
+$L['i18n_incorrect_locale'] = 'Incorrect locale';
+$L['i18n_items_added'] = '{$cnt} items added';
+$L['i18n_items_removed'] = '{$cnt} items removed';
+$L['i18n_items_updated'] = '{$cnt} items updated';
+$L['i18n_locale_selection'] = 'Locale Selection';
+$L['i18n_localized'] = 'Localized';
+$L['i18n_no_categories'] = 'No categories selected for translation. You can set them in <a href="%s">Internationalization settings<a>';
+$L['i18n_original'] = 'Original';
+$L['i18n_structure'] = 'Structure Internationalization';
+$L['i18n_translate'] = 'Translate';
+$L['i18n_translation'] = 'Translation';
