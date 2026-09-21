@@ -44,7 +44,7 @@ $L['cfg_rewrite'] = 'Enable URL overwrite for language parameter';
 $L['cfg_rewrite_hint'] = 'Requires manual .htaccess update';
 $L['cfg_cookie'] = 'Remember language selection in cookie';
 
-$L['info_desc'] = 'Localization tool for pages, categories, tags, etc. enabling multilanguage support';
+
 
 // Plugin strings
 
