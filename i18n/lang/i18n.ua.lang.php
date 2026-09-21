@@ -1,23 +1,47 @@
 <?php
 /**
- * Ukrainian Language File for extention: i18n Content Internationalization Plugin (plugins/i18n/lang/i18n.ua.lang.php) 
+ * Ukrainian Language File for i18n modified Plugin for CMF Cotonti, PHP v.8.5+, MySQL v.8.4
  *
- * i18n plugin for Cotonti 1, PHP 8.4+
- * Version: 1.0.13  
- * Date: Feb 15th, 2026
- * The translation has been adapted: webitproff, 2026 | https://github.com/webitproff 
+ * - назва та опис модуля (info_name, info_desc, info_notes)
+ * - налаштування в адмін-панелі (cfg_…)
+ * - підказки до полів (cfg_…_hint)
+ *
+ * Filename: plugins/i18n/lang/i18n.ua.lang.php
+ *
+ * Source and updates   https://github.com/webitproff/i18n-modified
+ * ReadMeMore:          https://abuyfile.com/ru/market/cotonti/plugs/i18n-modified
+ * Support:             https://abuyfile.com/ru/forums/cotonti/lang-localiz
+ *
+ * Date: Sep 19, 2026
  *
  * @package i18n
- * @copyright (c) Cotonti Team
- * @license https://github.com/Cotonti/Cotonti/blob/master/License.txt
+ * @version 2.10-1.0.13
+ * @author Cotonti Team, webitproff
+ * @copyright (c) Cotonti Team, webitproff 2026 | https://github.com/webitproff
+ * @license BSD
  */
  
-defined('COT_CODE') or die('Wrong URL.');
 // приклад використання апострофа без екранування:
 // - $L['name'] = 'Ім’я'; правильно
 // - $L['name'] = "Ім'я"; правильно (подвійні лапки)
 // НЕ правильно $L['name'] = 'Ім'я';
 // Екранування правильно для спецсимволів $L['name'] = 'Ім\'я'; (зворотний слеш)
+
+defined('COT_CODE') or die('Wrong URL.');
+
+// ========================
+// ІНФОРМАЦІЯ ПРО РОЗШИРЕННЯ
+// ========================
+$L['info_name']  = 'i18n modified';
+$L['info_desc']  = 'Модифікований плагін мультимовності інтерфейсу сайту та статей. Підтримка багатомовного контенту в модулі Pages, ядрі та розширеннях';
+$L['info_notes'] = 'Детальніше: <a href="https://github.com/webitproff/i18n-modified" target="_blank">документація та посилання на неї</a>.';
+
+$L['i18n_title']       = $L['info_name'];
+$L['i18n_desc']        = $L['info_desc'];
+/**
+ * Plugin Title & Subtitle
+ */
+$L['i18n_pages'] = 'Переклади сторінок';
 
 
 // Plugin configuration
@@ -31,19 +55,8 @@ $L['cfg_rewrite'] = 'Увімкнути ЧПУ для параметра мов�
 $L['cfg_rewrite_hint'] = 'Потребує ручного оновлення .htaccess';
 $L['cfg_cookie'] = 'Запам’ятовувати обрану мову в cookie';
 
-$L['i18n_pages'] = 'Переклади сторінок';
-/**
- * Plugin Information
- */
-
-$L['info_name'] = 'Багатомовність статей та інтерфейсу';
-$L['info_desc'] = 'Підтримка багатомовного контенту та категорій модуля Pages, ядро системи щодо багатомовності інтерфейсу.';
-$L['info_notes'] = 'Плагін не перекладає контент в інших модулях та плагінах.';
 
 
-/**
- * Plugin Title & Subtitle
- */
 
 
 
