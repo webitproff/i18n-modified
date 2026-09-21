@@ -1,13 +1,38 @@
 <?php
 /**
- * Russian Language File for Content Internationalization Plugin
+ * Russian Language File for i18n modified Plugin for CMF Cotonti, PHP v.8.5+, MySQL v.8.4
  *
- * @package I18n
- * @copyright (c) Cotonti Team
- * @license https://github.com/Cotonti/Cotonti/blob/master/License.txt
+ * - название и описание модуля (info_name, info_desc, info_notes)
+ * - настройки в админ-панели (cfg_…)
+ * - подсказки к полям (cfg_…_hint)
+ *
+ * Filename: plugins/i18n/lang/i18n.ru.lang.php
+ *
+ * Source and updates   https://github.com/webitproff/i18n-modified
+ * ReadMeMore:          https://abuyfile.com/ru/market/cotonti/plugs/i18n-modified
+ * Support:             https://abuyfile.com/ru/forums/cotonti/lang-localiz
+ *
+ * Date: Sep 19, 2026
+ *
+ * @package i18n
+ * @version 2.10-1.0.13
+ * @author Cotonti Team, webitproff
+ * @copyright (c) Cotonti Team, webitproff 2026 | https://github.com/webitproff
+ * @license BSD
  */
 
 defined('COT_CODE') or die('Wrong URL.');
+
+// ========================
+// ИНФОРМАЦИЯ О РАСШИРЕНИИ
+// ========================
+$L['info_name']  = 'i18n modified';
+$L['info_desc']  = 'Модифицированный плагин мультиязычности интерфейса сайта и статей. Поддержка многоязычного контента в модуле Pages, в ядре и расширениях';
+$L['info_notes'] = 'Подробнее: <a href="https://github.com/webitproff/i18n-modified" target="_blank">документация и ссылки на неё</a>.';
+
+$L['i18n_title']       = $L['info_name'];
+$L['i18n_desc']        = $L['info_desc'];
+
 
 // Plugin configuration
 
