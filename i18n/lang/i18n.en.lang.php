@@ -1,13 +1,37 @@
 <?php
 /**
- * English Language File for Content Internationalization Plugin
+ * English Language File for i18n modified Plugin for CMF Cotonti, PHP v.8.5+, MySQL v.8.4
  *
- * @package I18n
- * @copyright (c) Cotonti Team
- * @license https://github.com/Cotonti/Cotonti/blob/master/License.txt
+ * - module name and description (info_name, info_desc, info_notes)
+ * - admin panel settings (cfg_…)
+ * - field hints (cfg_…_hint)
+ *
+ * Filename: plugins/i18n/lang/i18n.en.lang.php
+ *
+ * Source and updates   https://github.com/webitproff/i18n-modified
+ * ReadMeMore:          https://abuyfile.com/ru/market/cotonti/plugs/i18n-modified
+ * Support:             https://abuyfile.com/ru/forums/cotonti/lang-localiz
+ *
+ * Date: Sep 19, 2026
+ *
+ * @package i18n
+ * @version 2.10-1.0.13
+ * @author Cotonti Team, webitproff
+ * @copyright (c) Cotonti Team, webitproff 2026 | https://github.com/webitproff
+ * @license BSD
  */
 
 defined('COT_CODE') or die('Wrong URL.');
+
+// ========================
+// EXTENSION INFORMATION
+// ========================
+$L['info_name']  = 'i18n modified';
+$L['info_desc']  = 'Modified plugin for multilingual interface and articles. Support for multilingual content in Pages module, core and extensions.';
+$L['info_notes'] = 'More: <a href="https://github.com/webitproff/i18n-modified" target="_blank">documentation and links</a>.';
+
+$L['i18n_title']       = $L['info_name'];
+$L['i18n_desc']        = $L['info_desc'];
 
 // Plugin configuration
 
@@ -39,3 +63,4 @@ $L['i18n_original'] = 'Original';
 $L['i18n_structure'] = 'Structure Internationalization';
 $L['i18n_translate'] = 'Translate';
 $L['i18n_translation'] = 'Translation';
+$L['i18n_pages'] = 'i18n pages translations';
